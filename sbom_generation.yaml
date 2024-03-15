@@ -13,12 +13,12 @@ steps:
   - type: Command
     name: "Install cyclonedx_py module"
     command: |
-      pip install cyclonedx-bom
+      pip install cyclonedx-bom==3.11.7
   - type: Command
     name: "Run Python cyclonedx_py module"
     command: |
       # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      cyclonedx-py requirements requirements.txt --of JSON -o artifactSBOM.json --sv 1.4
+      python3 -m cyclonedx_py -r -pb --format json -o artifactSBOM.json --schema-version 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
