@@ -11,14 +11,22 @@ shell: bash
 
 steps:
   - type: Command
-    name: "Install cyclonedx_py module"
-    command: |
-      pip install cyclonedx-bom==3.11.7
+    name: "python version"
+    command: python -V
   - type: Command
-    name: "Run Python cyclonedx_py module"
+    name: "pip version"
+    command: pip --version
+  - type: Command
+    name: "Install  Cdxgen"
+    command: npm install -g @cyclonedx/cdxgen
+  - type: Command
+    name: "debug mode"
+    command: export CDXGEN_DEBUG_MODE=debug
+  - type: Command
+    name: "Run cdxgen"
     command: |
       # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      python3 -m cyclonedx_py -r -pb --format json -o artifactSBOM.json --schema-version 1.4
+      cdxgen -t python -o artifactSBOM.json --schema-version 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
