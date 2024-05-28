@@ -1,32 +1,22 @@
 # Copyright (c) 2023, Oracle and/or its affiliates. All rights reserved.
-
 # This OCI DevOps build specification file [1] generates a Software Bill of Materials (SBOM) of the repository.
 # The file is needed to run checks for third-party vulnerabilities and business approval according to Oracle’s GitHub policies.
 # [1] https://docs.oracle.com/en-us/iaas/Content/devops/using/build_specs.htm
-
 version: 0.1
 component: build
 timeoutInSeconds: 1000
 shell: bash
-
 steps:
   - type: Command
-    name: "python version"
-    command: python -V
+    name: "Install cyclonedx_py module"
+    command: |
+      pip install cyclonedx-bom
+      pip install cyclonedx-bom==3.11.7
   - type: Command
-    name: "pip version"
-    command: pip --version
-  - type: Command
-    name: "Install  Cdxgen"
-    command: npm install -g @cyclonedx/cdxgen
-  - type: Command
-    name: "debug mode"
-    command: export CDXGEN_DEBUG_MODE=debug
-  - type: Command
-    name: "Run cdxgen"
+    name: "Run Python cyclonedx_py module"
     command: |
       # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      cdxgen -t python -o artifactSBOM.json --schema-version 1.4
+      python3 -m cyclonedx_py -r -pb --format json -o artifactSBOM.json --schema-version 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
