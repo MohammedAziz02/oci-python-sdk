@@ -10,7 +10,7 @@ steps:
   - type: Command
     name: "Install cyclonedx_py module"
     command: |
-      pip install cyclonedx-bom
+      pip install cyclonedx-bom==3.11.7
   - type: Command
     name: "create a virtual environement"
     command: |
@@ -26,7 +26,7 @@ steps:
   - type: Command
     name: "run the command"
     command: |
-      cyclonedx-py environment "./myenv/bin/python" -o artifactSBOM.json --sv 1.4 --of JSON
+      python3 -m cyclonedx_py -e -o artifactSBOM.json --format json --schema-version 1.4
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
