@@ -11,12 +11,22 @@ steps:
     name: "Install cyclonedx_py module"
     command: |
       pip install cyclonedx-bom
-      pip install cyclonedx-bom==3.11.7
   - type: Command
-    name: "Run Python cyclonedx_py module"
+    name: "create a virtual environement"
     command: |
-      # For more details, visit https://github.com/CycloneDX/cyclonedx-python/blob/main/README.md
-      python3 -m cyclonedx_py -r -pb --format json -o artifactSBOM.json --schema-version 1.4
+      python3 -m venv myenv
+  - type: Command
+    name: "activate the virtual env"
+    command: |
+      source myenv/bin/activate
+  - type: Command
+    name: "install dependencies inside this environment"
+    command: |
+     pip install -r requirements.txt
+  - type: Command
+    name: "run the command"
+    command: |
+      cyclonedx-py environment "./myenv/bin/python" -o artifactSBOM.json --sv 1.4 --of JSON
 outputArtifacts:
   - name: artifactSBOM
     type: BINARY
