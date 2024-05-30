@@ -8,6 +8,10 @@ timeoutInSeconds: 1000
 shell: bash
 steps:
   - type: Command
+    name: "python Version"
+    command: |
+      echo "python version " . python --version . " python3 version " . python3 --version
+  - type: Command
     name: "Install cyclonedx_py module"
     command: |
       pip install cyclonedx-bom==3.11.7
